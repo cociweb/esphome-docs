@@ -1,0 +1,28 @@
+---
+title: "A2DP Text Sensor"
+description: "Instructions for exposing Bluetooth A2DP AVRCP metadata as text sensors in ESPHome."
+---
+
+The `a2dp` text sensor platform exposes AVRCP metadata received by the [A2DP Hub](/components/a2dp/). It depends on
+[A2DP AVRCP](/components/a2dp_avrcp/).
+
+```yaml
+# Example minimal configuration entry
+text_sensor:
+  - platform: a2dp
+    name: "Bluetooth Title"
+    a2dp_id: bt_audio
+    type: title
+```
+
+## Configuration Variables
+
+- **a2dp_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Hub](/components/a2dp/) instance to
+  read metadata from.
+- **type** (**Required**, enum): Metadata field to publish. One of `title`, `artist`, `album`, or `album_artist`.
+- All other options from [Text Sensor](/components/text_sensor/).
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP AVRCP](/components/a2dp_avrcp/)

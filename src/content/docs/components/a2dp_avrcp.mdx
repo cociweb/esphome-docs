@@ -1,0 +1,56 @@
+---
+title: "A2DP AVRCP"
+description: "Instructions for setting up AVRCP remote control support for the A2DP hub in ESPHome."
+---
+
+The `a2dp_avrcp` component adds AVRCP controller support to the [A2DP Hub](/components/a2dp/). It provides
+automation actions for playback and volume control and can expose volume change callbacks.
+
+This component depends on the [A2DP Hub](/components/a2dp/).
+
+```yaml
+# Example minimal configuration entry
+a2dp:
+  id: bt_audio
+
+a2dp_avrcp:
+  id: bt_remote
+  a2dp_id: bt_audio
+```
+
+## Configuration Variables
+
+- **id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the ID used for code generation.
+- **a2dp_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Hub](/components/a2dp/) instance to
+  control.
+- **on_volume_changed** (*Optional*, [Automation](/automations)): An automation to perform when the remote AVRCP
+  absolute volume changes. The callback argument is the volume value from `0` to `127`.
+- All other options from [Component](/components/esphome#component).
+
+## Automations
+
+All actions use the configured `a2dp_avrcp` component ID. The `stop` action sends an AVRCP pause command for better
+compatibility with common Bluetooth sources.
+
+```yaml
+on_...:
+  - a2dp_avrcp.play: bt_remote
+  - a2dp_avrcp.pause: bt_remote
+  - a2dp_avrcp.play_pause: bt_remote
+  - a2dp_avrcp.next: bt_remote
+  - a2dp_avrcp.previous: bt_remote
+  - a2dp_avrcp.stop: bt_remote
+  - a2dp_avrcp.volume_up: bt_remote
+  - a2dp_avrcp.volume_down: bt_remote
+```
+
+## Text Sensors
+
+Track metadata can be exposed with the [A2DP Text Sensor](/components/text_sensor/a2dp/) platform. Supported
+metadata types are `title`, `artist`, `album`, and `album_artist`.
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP Sink](/components/a2dp_sink/)
+- [A2DP Text Sensor](/components/text_sensor/a2dp/)

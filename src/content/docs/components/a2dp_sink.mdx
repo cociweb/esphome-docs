@@ -1,0 +1,69 @@
+---
+title: "A2DP Sink"
+description: "Instructions for setting up the Bluetooth A2DP sink component in ESPHome."
+---
+
+The `a2dp_sink` component receives Bluetooth A2DP audio from a paired source, such as a phone, and exposes it to
+ESPHome audio components. The Bluetooth stack and audio buffer are owned by the [A2DP Hub](/components/a2dp/),
+which must be configured first.
+
+This component only works on ESP32-based chips using the [ESP-IDF framework](/components/esp32#esp32-framework).
+
+```yaml
+# Example minimal configuration entry
+a2dp:
+  id: bt_audio
+
+a2dp_sink:
+  id: bt_sink
+  a2dp_id: bt_audio
+```
+
+## Configuration Variables
+
+- **id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the ID used for code generation.
+- **a2dp_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Hub](/components/a2dp/) instance to
+  use.
+- **sample_rate** (*Optional*, enum): Requested output sample rate. One of `8000`, `11025`, `16000`, `22050`,
+  `32000`, `44100`, or `48000`. Defaults to `44100`.
+- **pcm_drain_throttle** (*Optional*, [Time](/guides/configuration-types#time)): How long buffered PCM data is
+  drained after Bluetooth audio stops before the source reports idle. Defaults to `500ms`.
+- **speaker_output_delay** (*Optional*, [Time](/guides/configuration-types#time)): Initial delay before draining
+  the A2DP buffer to the speaker pipeline. Defaults to `200ms`.
+- **speaker_pipeline_delay** (*Optional*, [Time](/guides/configuration-types#time)): Delay used by the speaker
+  pipeline integration. Defaults to `200ms`.
+- All other options from [Component](/components/esphome#component).
+
+## Automations
+
+### `a2dp_sink.enable` Action
+
+Enable the parent A2DP hub.
+
+```yaml
+on_...:
+  - a2dp_sink.enable: bt_sink
+```
+
+### `a2dp_sink.disable` Action
+
+Disable the parent A2DP hub.
+
+```yaml
+on_...:
+  - a2dp_sink.disable: bt_sink
+```
+
+## Related Platforms
+
+- [A2DP Sink Media Source](/components/media_source/a2dp_sink/): Routes Bluetooth audio into a media source
+  pipeline.
+- [A2DP Sink Text Sensor](/components/text_sensor/a2dp_sink/): Publishes the connected Bluetooth peer name.
+- [A2DP Sink Binary Sensor](/components/binary_sensor/a2dp_sink/): Publishes the Bluetooth connection state.
+- [A2DP Sink AVRCP](/components/a2dp_sink_avrcp/): Adds playback and volume control actions for the sink.
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP AVRCP](/components/a2dp_avrcp/)
+- [Speaker Source Media Player](/components/media_player/speaker_source/)

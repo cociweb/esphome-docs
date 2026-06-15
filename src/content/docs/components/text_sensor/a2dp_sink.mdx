@@ -1,0 +1,26 @@
+---
+title: "A2DP Sink Text Sensor"
+description: "Instructions for exposing the connected A2DP sink peer name as a text sensor in ESPHome."
+---
+
+The `a2dp_sink` text sensor platform publishes the name of the Bluetooth peer connected to an
+[A2DP Sink](/components/a2dp_sink/).
+
+```yaml
+# Example minimal configuration entry
+text_sensor:
+  - platform: a2dp_sink
+    name: "Bluetooth Peer"
+    a2dp_sink_id: bt_sink
+```
+
+## Configuration Variables
+
+- **a2dp_sink_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Sink](/components/a2dp_sink/)
+  instance to read from.
+- All other options from [Text Sensor](/components/text_sensor/).
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP Sink](/components/a2dp_sink/)

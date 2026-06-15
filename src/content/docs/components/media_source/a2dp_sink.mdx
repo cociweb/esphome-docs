@@ -1,0 +1,40 @@
+---
+title: "A2DP Sink Media Source"
+description: "Instructions for routing Bluetooth A2DP sink audio through ESPHome media sources."
+---
+
+The `a2dp_sink` media source platform exposes audio received by the [A2DP Sink](/components/a2dp_sink/) as an
+ESPHome [media source](/components/media_source/). Use it with a media player that can route media source output,
+such as the [Speaker Source Media Player](/components/media_player/speaker_source/).
+
+```yaml
+# Example minimal configuration entry
+media_source:
+  - platform: a2dp_sink
+    id: bluetooth_source
+    a2dp_sink_id: bt_sink
+```
+
+## Configuration Variables
+
+- **id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the media source ID.
+- **a2dp_sink_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Sink](/components/a2dp_sink/)
+  instance to read audio from.
+- **task_stack_in_psram** (*Optional*, boolean): Run the media source reader task stack in PSRAM. This requires
+  [PSRAM](/components/psram/).
+- All other options from [Media Source](/components/media_source/).
+
+## URI
+
+This media source handles the `a2dp://stream` URI.
+
+```yaml
+media_player.play_media:
+  media_url: a2dp://stream
+```
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP Sink](/components/a2dp_sink/)
+- [Speaker Source Media Player](/components/media_player/speaker_source/)

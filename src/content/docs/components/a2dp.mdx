@@ -1,0 +1,83 @@
+---
+title: "A2DP Hub"
+description: "Instructions for setting up the Bluetooth A2DP hub component in ESPHome."
+---
+
+The `a2dp` component enables Bluetooth Classic A2DP support on ESP32 devices. It owns the Bluetooth stack,
+the A2DP audio ring buffer, device discovery, reconnect handling, and AVRCP metadata transport used by related
+A2DP components.
+
+This component only works on ESP32-based chips using the [ESP-IDF framework](/components/esp32#esp32-framework).
+
+> [!WARNING]
+> Bluetooth audio uses a significant amount of RAM and CPU time. External PSRAM is recommended, especially when
+> Bluetooth audio is used together with other audio components.
+
+```yaml
+# Example minimal configuration entry
+a2dp:
+  id: bt_audio
+  device_name: "ESPHome A2DP"
+```
+
+## Configuration Variables
+
+- **id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the ID used for code generation.
+- **device_name** (*Optional*, string): The Bluetooth device name advertised by the ESP32. Defaults to `ESPHome`.
+- **auto_start** (*Optional*, boolean): Start the A2DP hub automatically during setup. Defaults to `false`.
+- **auto_reconnect** (*Optional*, boolean): Automatically reconnect to the last known Bluetooth peer. Defaults to
+  `false`.
+- **ring_buffer_size** (*Optional*, integer): Size of the PCM audio ring buffer in bytes. Must be between `16384`
+  and `4194304`. Defaults to `131072`.
+- **use_psram** (*Optional*, boolean): Prefer PSRAM for the audio ring buffer. Defaults to `false`.
+- **discoverable_duration** (*Optional*, [Time](/guides/configuration-types#time)): How long the device stays
+  discoverable when discovery is started.
+- **preferred_sample_rate** (*Optional*, enum): Preferred SBC sample rate. One of `auto`, `44100`, or `48000`.
+  Defaults to `auto`.
+- **preferred_bits_per_sample** (*Optional*, enum): Preferred decoded PCM bit depth. One of `16` or `32`.
+  Defaults to `16`.
+- **coexistence** (*Optional*, mapping): Bluetooth/WiFi coexistence tuning.
+  - **software_coexistence** (*Optional*, boolean): Enable software coexistence handling. Defaults to `true`.
+  - **prefer_bt_while_streaming** (*Optional*, boolean): Prefer Bluetooth while A2DP audio is streaming. Defaults
+    to `true`.
+  - **prefer_bt_while_discoverable** (*Optional*, boolean): Prefer Bluetooth while the device is discoverable.
+    Defaults to `false`.
+  - **pause_wifi_sources_on_connect** (*Optional*, boolean): Pause WiFi-based media sources when an A2DP peer
+    connects. Defaults to `false`.
+- All other options from [Component](/components/esphome#component).
+
+## Automations
+
+### `a2dp.enable` Action
+
+Enable the A2DP hub.
+
+```yaml
+on_...:
+  - a2dp.enable: bt_audio
+```
+
+### `a2dp.disable` Action
+
+Disable the A2DP hub and reset its audio buffer.
+
+```yaml
+on_...:
+  - a2dp.disable: bt_audio
+```
+
+### `a2dp.restart_discovery` Action
+
+Restart Bluetooth discovery when the hub is enabled and no peer is connected.
+
+```yaml
+on_...:
+  - a2dp.restart_discovery: bt_audio
+```
+
+## See Also
+
+- [A2DP Sink](/components/a2dp_sink/)
+- [A2DP AVRCP](/components/a2dp_avrcp/)
+- [A2DP Sink Media Source](/components/media_source/a2dp_sink/)
+- [ESP32](/components/esp32/)

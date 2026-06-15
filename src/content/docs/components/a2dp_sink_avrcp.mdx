@@ -1,0 +1,48 @@
+---
+title: "A2DP Sink AVRCP"
+description: "Instructions for setting up AVRCP control actions for the A2DP sink component in ESPHome."
+---
+
+The `a2dp_sink` AVRCP platform adds playback and volume control actions for an [A2DP Sink](/components/a2dp_sink/).
+It delegates AVRCP commands through the parent [A2DP Hub](/components/a2dp/).
+
+```yaml
+# Example minimal configuration entry
+a2dp_sink:
+  id: bt_sink
+  a2dp_id: bt_audio
+
+a2dp_sink:
+  avrcp:
+    id: bt_sink_remote
+    a2dp_sink_id: bt_sink
+```
+
+## Configuration Variables
+
+- **id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the ID used for code generation.
+- **a2dp_sink_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Sink](/components/a2dp_sink/)
+  instance to control.
+- **on_volume_changed** (*Optional*, [Automation](/automations)): An automation to perform when the remote AVRCP
+  absolute volume changes. The callback argument is the volume value from `0` to `127`.
+- All other options from [Component](/components/esphome#component).
+
+## Automations
+
+The `stop` action sends an AVRCP pause command for better compatibility with common Bluetooth sources.
+
+```yaml
+on_...:
+  - a2dp_sink.avrcp.play: bt_sink_remote
+  - a2dp_sink.avrcp.pause: bt_sink_remote
+  - a2dp_sink.avrcp.next: bt_sink_remote
+  - a2dp_sink.avrcp.previous: bt_sink_remote
+  - a2dp_sink.avrcp.stop: bt_sink_remote
+  - a2dp_sink.avrcp.volume_up: bt_sink_remote
+  - a2dp_sink.avrcp.volume_down: bt_sink_remote
+```
+
+## See Also
+
+- [A2DP Sink](/components/a2dp_sink/)
+- [A2DP AVRCP](/components/a2dp_avrcp/)

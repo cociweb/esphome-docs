@@ -1,0 +1,26 @@
+---
+title: "A2DP Sink Binary Sensor"
+description: "Instructions for exposing the A2DP sink connection state as a binary sensor in ESPHome."
+---
+
+The `a2dp_sink` binary sensor platform publishes whether a Bluetooth peer is connected to an
+[A2DP Sink](/components/a2dp_sink/).
+
+```yaml
+# Example minimal configuration entry
+binary_sensor:
+  - platform: a2dp_sink
+    name: "Bluetooth Connected"
+    a2dp_sink_id: bt_sink
+```
+
+## Configuration Variables
+
+- **a2dp_sink_id** (**Required**, [ID](/guides/configuration-types#id)): The [A2DP Sink](/components/a2dp_sink/)
+  instance to read from.
+- All other options from [Binary Sensor](/components/binary_sensor/).
+
+## See Also
+
+- [A2DP Hub](/components/a2dp/)
+- [A2DP Sink](/components/a2dp_sink/)
