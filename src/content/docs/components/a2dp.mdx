@@ -18,6 +18,7 @@ This component only works on ESP32-based chips using the [ESP-IDF framework](/co
 a2dp:
   id: bt_audio
   device_name: "ESPHome A2DP"
+  pairing_pin: "1234"
   keep_discoverable_after_connect: true
 ```
 
@@ -35,6 +36,8 @@ a2dp:
   discoverable when discovery is started. If omitted, discovery remains active indefinitely.
 - **keep_discoverable_after_connect** (*Optional*, boolean): Keep the device discoverable after a Bluetooth peer
   connects. Defaults to `false`.
+- **pairing_pin** (*Optional*, string): Fixed Bluetooth Classic PIN code to use for legacy pairing. Must be between
+  `1` and `16` characters. If omitted, the hub uses the default Bluetooth pairing behavior.
 - **preferred_sample_rate** (*Optional*, enum): Preferred SBC sample rate. One of `auto`, `44100`, or `48000`.
   Defaults to `auto`.
 - **preferred_bits_per_sample** (*Optional*, enum): Preferred decoded PCM bit depth. One of `16` or `32`.
